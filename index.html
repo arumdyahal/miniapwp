@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INTIM Token MiniApp</title>
+
+  <!-- OG Meta for Warpcast preview -->
+  <meta property="og:title" content="INTIM Token" />
+  <meta property="og:description" content="Live price, liquidity, and volume" />
+  <meta property="og:image" content="https://YOUR-VERCEL-APP.vercel.app/og-image.png" />
+
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>INTIM Token</h1>
+    <p><strong>Contract:</strong> 0x4dfbac50ed68b44abbfa463a24173072ad3d0f27</p>
+    <p>Price: <span id="price">Loading...</span></p>
+    <p>Liquidity: <span id="liq">Loading...</span></p>
+    <p>24h Volume: <span id="vol">Loading...</span></p>
+  </div>
+
+<script>
+async function loadData(){
+  const token = "0x4dfbac50ed68b44abbfa463a24173072ad3d0f27";
+  try{
+    const res = await fetch("/api/token?address=" + token);
+    const data = await res.json();
+
+    const pair =
+      data?.pairs && data.pairs.length > 0
+        ? data.pairs[0]
+        : null;
+
+    if (!pair) {
+      document.getElementById("price").innerText = "Not found";
+      document.getElementById("liq").innerText = "—";
+      document.getElementById("vol").innerText = "—";
+      return;
+    }
+
+    document.getElementById("price").innerText = "$" + pair.priceUsd;
+    document.getElementById("liq").innerText = "$" + pair.liquidity?.usd;
+    document.getElementById("vol").innerText = "$" + pair.volume?.h24;
+
+  } catch(e){
+    document.getElementById("price").innerText = "Error";
+    document.getElementById("liq").innerText = "Error";
+    document.getElementById("vol").innerText = "Error";
+  }
+}
+
+loadData();
+</script>
+
+</body>
+</html>
