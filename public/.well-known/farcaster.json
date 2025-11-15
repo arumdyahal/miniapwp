@@ -1,0 +1,17 @@
+{
+  "name": "INTIM Token Card",
+  "description": "Mini app untuk menampilkan data token INTIM",
+  "url": "https://YOUR-VERCEL-APP.vercel.app/",
+  "icons": {
+    "48": "/og-image.png",
+    "192": "/og-image.png"
+  },
+  "author": {
+    "name": "Miniapp Builder",
+    "url": "https://example.com"
+  },
+  "capabilities": {
+    "signIn": false,
+    "notifications": false
+  }
+}
